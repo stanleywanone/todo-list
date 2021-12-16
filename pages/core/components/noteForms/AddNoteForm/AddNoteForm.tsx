@@ -9,7 +9,7 @@ import {
   Radio,
   Flex,
 } from '@chakra-ui/react';
-import { useNote } from '@/core/hooks/note';
+import { useNoteDetailContext } from '@/core/hooks/note';
 
 export const AddNoteForm: FC = () => {
   const {
@@ -20,7 +20,7 @@ export const AddNoteForm: FC = () => {
     priority,
     title,
     description,
-  } = useNote();
+  } = useNoteDetailContext();
   return (
     <Flex flexDir="column" p={2}>
       <FormControl mb={4}>

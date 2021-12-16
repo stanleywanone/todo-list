@@ -23,7 +23,9 @@ export const CardContainer: FC<CardContainer> = ({
       p={2}
       borderRadius={5}
     >
-      <Text mb={4}>{groupName}</Text>
+      <Text mb={4} fontWeight="bold">
+        {groupName}
+      </Text>
       {items.map((item) => {
         return <Card item={item} key={item.id} mb={4} />;
       })}
@@ -33,6 +35,7 @@ export const CardContainer: FC<CardContainer> = ({
           h={4}
           mt={1}
           mr={2}
+          cursor="pointer"
           onClick={() => setOpenAddModal(true)}
         />
         <Text>Add another note</Text>

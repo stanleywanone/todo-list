@@ -4,14 +4,14 @@ import Header from '@/core/common/components/Header';
 import { CardContainer } from '@/core/common/components/Card/CardContainer';
 import { Note } from '@/core/common/boundary/Note';
 import { AddNoteModal } from '@/core/components/noteForms/AddNoteModal/AddNoteModal';
-import { useNote } from '@/core/hooks/note';
+import { useNote, NoteDetailProvider } from '@/core/hooks/note';
 
 interface HomeProps {
   notes: Note[];
 }
 
 const Home: NextPage<HomeProps> = ({ notes }) => {
-  const { openAddModal, setOpenAddModal } = useNote();
+  const noteDetails = useNote();
   return (
     <Flex flexDir="column" h={'full'}>
       <Header />
@@ -24,15 +24,14 @@ const Home: NextPage<HomeProps> = ({ notes }) => {
         <CardContainer
           items={notes}
           groupName="To Do"
-          setOpenAddModal={setOpenAddModal}
+          setOpenAddModal={noteDetails.setOpenAddModal}
         />
         <CardContainer items={notes} groupName="In Progress" />
         <CardContainer items={notes} groupName="Done" />
       </Flex>
-      <AddNoteModal
-        openAddModal={openAddModal}
-        setOpenAddModal={setOpenAddModal}
-      />
+      <NoteDetailProvider value={noteDetails}>
+        <AddNoteModal />
+      </NoteDetailProvider>
     </Flex>
   );
 };

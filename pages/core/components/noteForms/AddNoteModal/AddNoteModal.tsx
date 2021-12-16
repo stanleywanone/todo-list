@@ -1,4 +1,4 @@
-import { FC, Dispatch, SetStateAction } from 'react';
+import { FC } from 'react';
 import {
   Button,
   Modal,
@@ -10,16 +10,10 @@ import {
   ModalFooter,
 } from '@chakra-ui/react';
 import { AddNoteForm } from '@/core/components/noteForms/AddNoteForm/AddNoteForm';
+import { useNoteDetailContext } from '@/core/hooks/note';
 
-interface AddNoteModalProps {
-  setOpenAddModal: Dispatch<SetStateAction<boolean>>;
-  openAddModal: boolean;
-}
-
-export const AddNoteModal: FC<AddNoteModalProps> = ({
-  setOpenAddModal,
-  openAddModal,
-}) => {
+export const AddNoteModal: FC = () => {
+  const { setOpenAddModal, openAddModal, addNote } = useNoteDetailContext();
   return (
     <>
       <Modal
@@ -43,7 +37,9 @@ export const AddNoteModal: FC<AddNoteModalProps> = ({
             >
               Cancel
             </Button>
-            <Button colorScheme="blue">Add</Button>
+            <Button colorScheme="blue" onClick={addNote}>
+              Add
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
