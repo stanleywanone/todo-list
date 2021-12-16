@@ -3,16 +3,11 @@ const { connectToDatabase } = require('../../lib/mongodb');
 const ObjectId = require('mongodb').ObjectId;
 
 export default async (req, res): Promise<any> => {
-  // return new Promise((resolve, reject) => {});
-  // res.json({ test: 'test' });
-  // switch the methods
   switch (req.method) {
     case 'GET': {
       try {
         const { db } = await connectToDatabase();
         const notes = await db.collection('todolist').find({}).toArray();
-
-        console.log('data, ', notes);
 
         res.status(200).json({ success: true, data: notes });
       } catch (error) {

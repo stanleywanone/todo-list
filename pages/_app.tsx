@@ -1,4 +1,3 @@
-// export default App;
 import { FC } from 'react';
 import { PageComponent } from '@/core/common/types/page';
 import { ChakraProvider } from '@chakra-ui/react';
