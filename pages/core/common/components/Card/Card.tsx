@@ -4,6 +4,7 @@ import {
   Priority as PriorityLevel,
 } from '@/core/common/boundary/Card';
 import { Box, Flex, BoxProps, TextProps } from '@chakra-ui/react';
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 
 export interface CardProps extends BoxProps {
   item: CardType;
@@ -25,7 +26,7 @@ export const Priority: FC<PriorityProps> = ({ priority }) => {
         priority === PriorityLevel.High
           ? 'red'
           : priority === PriorityLevel.Medium
-          ? 'yellow'
+          ? 'yellow.300'
           : 'gray'
       }
     />
@@ -49,8 +50,13 @@ export const Card: FC<CardProps> = ({
       <Box {...titleProps} mb={2}>
         {item.title}
       </Box>
-      <Box mb={2}>{item.deadline}</Box>
-      <Priority priority={item.priority} />
+      <Flex>
+        <Priority priority={item.priority} />
+      </Flex>
+      <Flex justifyContent="flex-end">
+        <EditIcon mr={2} />
+        <DeleteIcon mr={2} />
+      </Flex>
     </Flex>
   );
 };

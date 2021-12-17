@@ -1,8 +1,9 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
 import { Card as CardProps } from '@/core/common/boundary/Card';
 import { Card } from './Card';
 import { AddIcon } from '@chakra-ui/icons';
+import { NoteDetailModal } from '@/core/components/noteForms/NoteDetailModal/NoteDetailModal';
 
 interface CardContainer {
   items?: CardProps[];
@@ -15,6 +16,7 @@ export const CardContainer: FC<CardContainer> = ({
   groupName,
   setOpenAddModal,
 }) => {
+  const [openModalTitle, setOpenModalTitle] = useState('');
   return (
     <Flex
       w={'400px'}
@@ -27,19 +29,35 @@ export const CardContainer: FC<CardContainer> = ({
         {groupName}
       </Text>
       {items.map((item) => {
-        return <Card item={item} key={item.id} mb={4} />;
+        return (
+          <>
+            <Card
+              item={item}
+              key={item.title}
+              mb={4}
+              onClick={() => setOpenModalTitle(item.title)}
+            />
+            <NoteDetailModal
+              note={item as any}
+              openDetailModal={item.title === openModalTitle}
+              setOpenModalTitle={setOpenModalTitle}
+            />
+          </>
+        );
       })}
-      <Flex>
-        <AddIcon
-          w={4}
-          h={4}
-          mt={1}
-          mr={2}
-          cursor="pointer"
-          onClick={() => setOpenAddModal(true)}
-        />
-        <Text>Add another note</Text>
-      </Flex>
+      {groupName === 'To Do' && (
+        <Flex>
+          <AddIcon
+            w={4}
+            h={4}
+            mt={1}
+            mr={2}
+            cursor="pointer"
+            onClick={() => setOpenAddModal(true)}
+          />
+          <Text>Add another note</Text>
+        </Flex>
+      )}
     </Flex>
   );
 };

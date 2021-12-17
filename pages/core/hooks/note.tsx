@@ -13,13 +13,13 @@ export interface UseNoteReturn {
   setTitle: Dispatch<SetStateAction<string>>;
   setDescription: Dispatch<SetStateAction<string>>;
   setPriority: Dispatch<SetStateAction<string>>;
-  setDeadline: Dispatch<SetStateAction<string>>;
+
   setOpenAddModal: Dispatch<SetStateAction<boolean>>;
   addNote: () => Promise<any>;
   priority: string;
   title: string;
   description: string;
-  deadline: string;
+
   openAddModal: boolean;
 }
 
@@ -35,24 +35,24 @@ export const useNote = (): UseNoteReturn => {
   const [priority, setPriority] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [deadline, setDeadline] = useState('');
+
   const [openAddModal, setOpenAddModal] = useState(false);
 
   const reset = useCallback(() => {
     setPriority('');
     setTitle('');
     setDescription('');
-    setDeadline('');
   }, []);
 
   useEffect(() => {
     if (!openAddModal) reset();
   }, [openAddModal]);
 
+  console.log('priority, ', priority);
   const addNote = async (): Promise<any> => {
     try {
       // add note
-      const note = { title, description };
+      const note = { title, description, priority };
       const response = await fetch('/api/notes', {
         method: 'POST',
         body: JSON.stringify(note),
@@ -74,9 +74,7 @@ export const useNote = (): UseNoteReturn => {
     setTitle,
     setDescription,
     setPriority,
-    setDeadline,
     addNote,
-    deadline,
     priority,
     title,
     description,
