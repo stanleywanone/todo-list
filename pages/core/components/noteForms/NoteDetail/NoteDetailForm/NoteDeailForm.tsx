@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import {
   FormControl,
   FormLabel,
@@ -9,17 +9,25 @@ import {
   Radio,
   Flex,
 } from '@chakra-ui/react';
-import { useNoteDetailContext } from '@/core/hooks/note';
 
-export const AddNoteForm: FC = () => {
-  const {
-    setTitle,
-    setDescription,
-    setPriority,
-    priority,
-    title,
-    description,
-  } = useNoteDetailContext();
+interface NoteDetailFormProps {
+  setTitle: Dispatch<SetStateAction<string>>;
+  setDescription: Dispatch<SetStateAction<string>>;
+  setPriority: Dispatch<SetStateAction<string>>;
+  priority: string;
+  title: string;
+  description: string;
+  id: string;
+  setOpenModalId: Dispatch<SetStateAction<string>>;
+}
+export const NoteDetailForm: FC<NoteDetailFormProps> = ({
+  setTitle,
+  setDescription,
+  setPriority,
+  priority,
+  title,
+  description,
+}) => {
   return (
     <Flex flexDir="column" p={2}>
       <FormControl mb={4}>
@@ -40,11 +48,7 @@ export const AddNoteForm: FC = () => {
       </FormControl>
       <FormControl mb={4}>
         <FormLabel>Priority</FormLabel>
-        <RadioGroup
-          defaultValue="Itachi"
-          onChange={setPriority}
-          value={priority}
-        >
+        <RadioGroup onChange={setPriority} value={priority}>
           <HStack spacing="24px">
             <Radio value="high">High</Radio>
             <Radio value="medium">Medium</Radio>

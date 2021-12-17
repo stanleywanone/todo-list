@@ -42,9 +42,15 @@ export default async (req, res): Promise<any> => {
         // update the published status of the note
         await db.collection('todolist').updateOne(
           {
-            _id: new ObjectId(req.body),
+            _id: ObjectId(req.body._id),
           },
-          { $set: { published: true } }
+          {
+            $set: {
+              title: req.body.title,
+              description: req.body.description,
+              priority: req.body.priority,
+            },
+          }
         );
 
         // return a message
@@ -65,9 +71,9 @@ export default async (req, res): Promise<any> => {
         // Connecting to the database
         const { db } = await connectToDatabase();
 
-        // Deleting the post
+        // Deleting the note
         await db.collection('todolist').deleteOne({
-          _id: new ObjectId(req.body),
+          _id: ObjectId(req.body._id),
         });
 
         // returning a message

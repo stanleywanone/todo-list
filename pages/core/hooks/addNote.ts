@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { useRouter } from 'next/router';
 
-export interface UseNoteReturn {
+export interface UseAddNoteReturn {
   setTitle: Dispatch<SetStateAction<string>>;
   setDescription: Dispatch<SetStateAction<string>>;
   setPriority: Dispatch<SetStateAction<string>>;
@@ -23,14 +23,14 @@ export interface UseNoteReturn {
   openAddModal: boolean;
 }
 
-const NoteDetailContext = createContext({} as unknown as UseNoteReturn);
+const NoteDetailContext = createContext({} as unknown as UseAddNoteReturn);
 
 export const NoteDetailProvider = NoteDetailContext.Provider;
 
-export const useNoteDetailContext = (): UseNoteReturn =>
+export const useNoteDetailContext = (): UseAddNoteReturn =>
   useContext(NoteDetailContext);
 
-export const useNote = (): UseNoteReturn => {
+export const useAddNote = (): UseAddNoteReturn => {
   const router = useRouter();
   const [priority, setPriority] = useState('');
   const [title, setTitle] = useState('');
@@ -48,7 +48,6 @@ export const useNote = (): UseNoteReturn => {
     if (!openAddModal) reset();
   }, [openAddModal]);
 
-  console.log('priority, ', priority);
   const addNote = async (): Promise<any> => {
     try {
       // add note

@@ -1,14 +1,15 @@
-import { FC } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import {
   Card as CardType,
   Priority as PriorityLevel,
 } from '@/core/common/boundary/Card';
 import { Box, Flex, BoxProps, TextProps } from '@chakra-ui/react';
-import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 export interface CardProps extends BoxProps {
   item: CardType;
   titleProps?: TextProps;
+  setOpenDeleteModal: Dispatch<SetStateAction<string>>;
 }
 
 interface PriorityProps {
@@ -34,6 +35,7 @@ export const Priority: FC<PriorityProps> = ({ priority }) => {
 };
 
 export const Card: FC<CardProps> = ({
+  setOpenDeleteModal,
   item = {},
   titleProps = {},
   ...props
@@ -45,6 +47,7 @@ export const Card: FC<CardProps> = ({
     p: 2,
     ...props,
   };
+
   return (
     <Flex {...cardStyleProps} flexDir="column">
       <Box {...titleProps} mb={2}>
@@ -54,8 +57,13 @@ export const Card: FC<CardProps> = ({
         <Priority priority={item.priority} />
       </Flex>
       <Flex justifyContent="flex-end">
-        <EditIcon mr={2} />
-        <DeleteIcon mr={2} />
+        <DeleteIcon
+          mr={2}
+          onClick={(e) => {
+            setOpenDeleteModal(item._id);
+            e.stopPropagation();
+          }}
+        />
       </Flex>
     </Flex>
   );

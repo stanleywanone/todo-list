@@ -9,14 +9,9 @@ import {
   Radio,
   Flex,
 } from '@chakra-ui/react';
-import { Note } from '@/core/common/boundary/Note';
-import { useEditNote } from '@/core/hooks/editNote';
+import { useNoteDetailContext } from '@/core/hooks/addNote';
 
-interface NoteDetailFormProps {
-  note: Note;
-}
-export const NoteDetailForm: FC<NoteDetailFormProps> = ({ note }) => {
-  console.log('note, ', note);
+export const AddNoteForm: FC = () => {
   const {
     setTitle,
     setDescription,
@@ -24,7 +19,7 @@ export const NoteDetailForm: FC<NoteDetailFormProps> = ({ note }) => {
     priority,
     title,
     description,
-  } = useEditNote(note);
+  } = useNoteDetailContext();
   return (
     <Flex flexDir="column" p={2}>
       <FormControl mb={4}>
@@ -45,7 +40,11 @@ export const NoteDetailForm: FC<NoteDetailFormProps> = ({ note }) => {
       </FormControl>
       <FormControl mb={4}>
         <FormLabel>Priority</FormLabel>
-        <RadioGroup onChange={setPriority} value={priority}>
+        <RadioGroup
+          defaultValue="Itachi"
+          onChange={setPriority}
+          value={priority}
+        >
           <HStack spacing="24px">
             <Radio value="high">High</Radio>
             <Radio value="medium">Medium</Radio>

@@ -3,20 +3,24 @@ import { Flex, Text } from '@chakra-ui/react';
 import { Card as CardProps } from '@/core/common/boundary/Card';
 import { Card } from './Card';
 import { AddIcon } from '@chakra-ui/icons';
-import { NoteDetailModal } from '@/core/components/noteForms/NoteDetailModal/NoteDetailModal';
+import { NoteDetailModal } from '@/core/components/noteForms/NoteDetail/NoteDetailModal/NoteDetailModal';
+import { useDeleteNote } from '@/core/hooks/deleteNote';
+import { DeleteNoteModal } from '@/core/components/noteForms/DeleteNote/DeleteNoteModal';
 
-interface CardContainer {
+interface CardContainerProps {
   items?: CardProps[];
   groupName: string;
   setOpenAddModal?: Dispatch<SetStateAction<boolean>>;
 }
 
-export const CardContainer: FC<CardContainer> = ({
+export const CardContainer: FC<CardContainerProps> = ({
   items = [],
   groupName,
   setOpenAddModal,
 }) => {
-  const [openModalTitle, setOpenModalTitle] = useState('');
+  const [openModalId, setOpenModalId] = useState('');
+  const { deleteNote, openDeleteModal, setOpenDeleteModal } = useDeleteNote();
+
   return (
     <Flex
       w={'400px'}
@@ -33,14 +37,23 @@ export const CardContainer: FC<CardContainer> = ({
           <>
             <Card
               item={item}
-              key={item.title}
+              key={item._id}
               mb={4}
-              onClick={() => setOpenModalTitle(item.title)}
+              cursor="pointer"
+              onClick={() => setOpenModalId(item._id)}
+              setOpenDeleteModal={setOpenDeleteModal}
             />
             <NoteDetailModal
               note={item as any}
-              openDetailModal={item.title === openModalTitle}
-              setOpenModalTitle={setOpenModalTitle}
+              openDetailModal={item._id === openModalId}
+              setOpenModalId={setOpenModalId}
+            />
+            <DeleteNoteModal
+              id={item._id}
+              title={item.title}
+              openDeleteModal={item._id === openDeleteModal}
+              setOpenDeleteModal={setOpenDeleteModal}
+              deleteNote={deleteNote}
             />
           </>
         );
