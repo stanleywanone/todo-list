@@ -49,6 +49,7 @@ export default async (req, res): Promise<any> => {
               title: req.body.title,
               description: req.body.description,
               priority: req.body.priority,
+              progress: req.body.progress,
             },
           }
         );

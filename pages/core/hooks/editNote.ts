@@ -6,6 +6,8 @@ interface UseEditNoteReturn {
   setTitle: Dispatch<SetStateAction<string>>;
   setDescription: Dispatch<SetStateAction<string>>;
   setPriority: Dispatch<SetStateAction<string>>;
+  setProgress: Dispatch<SetStateAction<string>>;
+  progress: string;
   priority: string;
   title: string;
   description: string;
@@ -21,11 +23,13 @@ export const useEditNote = (
   const [priority, setPriority] = useState(item.priority);
   const [title, setTitle] = useState(item.title);
   const [description, setDescription] = useState(item.description);
+  const [progress, setProgress] = useState(item.progress);
 
   const updateNote = async (): Promise<any> => {
     try {
       // update note
-      const note = { _id, title, description, priority };
+
+      const note = { _id, title, description, priority, progress };
 
       const response = await fetch('/api/notes', {
         method: 'PUT',
@@ -52,6 +56,8 @@ export const useEditNote = (
     setTitle,
     setDescription,
     setPriority,
+    progress,
+    setProgress,
     priority,
     title,
     description,

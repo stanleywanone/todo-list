@@ -4,6 +4,7 @@ export interface Card {
   title?: string;
   description?: string;
   priority?: string;
+  progress?: string;
 }
 
 export enum Priority {

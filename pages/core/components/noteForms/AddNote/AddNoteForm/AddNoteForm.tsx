@@ -10,6 +10,13 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { useNoteDetailContext } from '@/core/hooks/addNote';
+import { Select } from '@/core/common/components/Select/Select';
+
+const progressOptions = [
+  { value: 'To Do', label: 'To Do' },
+  { value: 'In Progress', label: 'In Progress' },
+  { value: 'Done', label: 'Done' },
+];
 
 export const AddNoteForm: FC = () => {
   const {
@@ -19,7 +26,10 @@ export const AddNoteForm: FC = () => {
     priority,
     title,
     description,
+    progress,
+    setProgress,
   } = useNoteDetailContext();
+
   return (
     <Flex flexDir="column" p={2}>
       <FormControl mb={4}>
@@ -51,6 +61,14 @@ export const AddNoteForm: FC = () => {
             <Radio value="low">Low</Radio>
           </HStack>
         </RadioGroup>
+      </FormControl>
+      <FormControl mb={4}>
+        <FormLabel>Progress</FormLabel>
+        <Select
+          options={progressOptions}
+          value={progress}
+          onChange={(e) => setProgress(e.target.value) as any}
+        />
       </FormControl>
     </Flex>
   );

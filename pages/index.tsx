@@ -23,15 +23,18 @@ const Home: NextPage<HomeProps> = ({ notes }) => {
         h={'full'}
       >
         <CardContainer
-          items={notes}
+          items={notes.filter((item) => item.progress === 'To Do')}
           groupName="To Do"
           setOpenAddModal={noteDetails.setOpenAddModal}
-          // setOpenDeleteModal={setOpenDeleteModal}
-          // deleteNote={deleteNote}
-          // openDeleteModal={openDeleteModal}
         />
-        <CardContainer items={notes} groupName="In Progress" />
-        <CardContainer items={notes} groupName="Done" />
+        <CardContainer
+          items={notes.filter((item) => item.progress === 'In Progress')}
+          groupName="In Progress"
+        />
+        <CardContainer
+          items={notes.filter((item) => item.progress === 'Done')}
+          groupName="Done"
+        />
       </Flex>
       <NoteDetailProvider value={noteDetails}>
         <AddNoteModal />

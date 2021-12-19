@@ -13,13 +13,13 @@ export interface UseAddNoteReturn {
   setTitle: Dispatch<SetStateAction<string>>;
   setDescription: Dispatch<SetStateAction<string>>;
   setPriority: Dispatch<SetStateAction<string>>;
-
+  setProgress: Dispatch<SetStateAction<string>>;
   setOpenAddModal: Dispatch<SetStateAction<boolean>>;
   addNote: () => Promise<any>;
   priority: string;
   title: string;
   description: string;
-
+  progress: string;
   openAddModal: boolean;
 }
 
@@ -35,6 +35,7 @@ export const useAddNote = (): UseAddNoteReturn => {
   const [priority, setPriority] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [progress, setProgress] = useState('');
 
   const [openAddModal, setOpenAddModal] = useState(false);
 
@@ -42,6 +43,7 @@ export const useAddNote = (): UseAddNoteReturn => {
     setPriority('');
     setTitle('');
     setDescription('');
+    setProgress('');
   }, []);
 
   useEffect(() => {
@@ -51,7 +53,7 @@ export const useAddNote = (): UseAddNoteReturn => {
   const addNote = async (): Promise<any> => {
     try {
       // add note
-      const note = { title, description, priority };
+      const note = { title, description, priority, progress };
       const response = await fetch('/api/notes', {
         method: 'POST',
         body: JSON.stringify(note),
@@ -79,5 +81,7 @@ export const useAddNote = (): UseAddNoteReturn => {
     description,
     openAddModal,
     setOpenAddModal,
+    progress,
+    setProgress,
   };
 };

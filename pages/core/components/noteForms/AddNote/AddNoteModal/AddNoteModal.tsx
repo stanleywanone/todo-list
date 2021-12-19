@@ -9,7 +9,7 @@ import {
   ModalBody,
   ModalFooter,
 } from '@chakra-ui/react';
-import { AddNoteForm } from '@/core/components/noteForms/AddNote/AddNoteForm';
+import { AddNoteForm } from '@/core/components/noteForms/AddNote/AddNoteForm/AddNoteForm';
 import { useNoteDetailContext } from '@/core/hooks/addNote';
 
 export const AddNoteModal: FC = () => {

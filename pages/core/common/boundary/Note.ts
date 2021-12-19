@@ -4,4 +4,5 @@ export interface Note {
   title?: string;
   description?: string;
   priority?: string;
+  progress?: string;
 }

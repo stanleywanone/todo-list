@@ -19,6 +19,7 @@ export const CardContainer: FC<CardContainerProps> = ({
   setOpenAddModal,
 }) => {
   const [openModalId, setOpenModalId] = useState('');
+  const [editId, setEditId] = useState('');
   const { deleteNote, openDeleteModal, setOpenDeleteModal } = useDeleteNote();
 
   return (
@@ -42,11 +43,15 @@ export const CardContainer: FC<CardContainerProps> = ({
               cursor="pointer"
               onClick={() => setOpenModalId(item._id)}
               setOpenDeleteModal={setOpenDeleteModal}
+              setOpenModalId={setOpenModalId}
+              setEditId={setEditId}
             />
             <NoteDetailModal
               note={item as any}
               openDetailModal={item._id === openModalId}
               setOpenModalId={setOpenModalId}
+              editId={editId}
+              setEditId={setEditId}
             />
             <DeleteNoteModal
               id={item._id}

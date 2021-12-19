@@ -17,12 +17,16 @@ interface NoteDetailModalProps {
   note: Note;
   openDetailModal: boolean;
   setOpenModalId: Dispatch<SetStateAction<string>>;
+  editId: string;
+  setEditId: Dispatch<SetStateAction<string>>;
 }
 
 export const NoteDetailModal: FC<NoteDetailModalProps> = ({
   note,
   openDetailModal,
   setOpenModalId,
+  editId,
+  setEditId,
 }) => {
   const {
     setTitle,
@@ -31,6 +35,8 @@ export const NoteDetailModal: FC<NoteDetailModalProps> = ({
     priority,
     title,
     description,
+    progress,
+    setProgress,
     updateNote,
   } = useEditNote(note, setOpenModalId);
   return (
@@ -52,8 +58,11 @@ export const NoteDetailModal: FC<NoteDetailModalProps> = ({
               priority={priority}
               title={title}
               description={description}
+              progress={progress}
+              setProgress={setProgress}
               setTitle={setTitle}
               id={note._id}
+              editId={editId}
             />
           </ModalBody>
 
@@ -61,13 +70,18 @@ export const NoteDetailModal: FC<NoteDetailModalProps> = ({
             <Button
               colorScheme="gray"
               mr={3}
-              onClick={() => setOpenModalId('')}
+              onClick={() => {
+                setOpenModalId('');
+                setEditId('');
+              }}
             >
-              Cancel
+              {editId === note._id ? 'Cancel' : 'Close'}
             </Button>
-            <Button colorScheme="blue" onClick={updateNote}>
-              Add
-            </Button>
+            {editId === note._id && (
+              <Button colorScheme="blue" onClick={updateNote}>
+                Save
+              </Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
